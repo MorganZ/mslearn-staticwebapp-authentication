@@ -19,6 +19,7 @@ jobs:
         with:
           submodules: true
       - name: run browser update
+        working-directory: ./vue-app
         run: npx browserslist@latest --update-db
       - name: Build And Deploy
         id: builddeploy
