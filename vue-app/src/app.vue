@@ -1,31 +1,29 @@
-<script>
-import HeaderBar from '@/components/header-bar.vue';
-import NavBar from '@/components/nav-bar.vue';
+<template>
+    <div>test</div>
+    <component :is="layout">
+        <router-view />
+    </component>
+    <hello></hello>
+</template>
+<script lang="ts">
+import { computed } from "@vue/reactivity";
+import { useRoute } from "vue-router";
+import defaultlayout from "./pages/layouts/default-layout.vue";
+import nolayout from "./pages/layouts/no-layout.vue";
+import hello from "./components/ _template.vue";
 
 export default {
-  name: 'App',
-  data() {
-    return {};
-  },
-  components: {
-    HeaderBar,
-    NavBar,
-  },
+    components: {
+        "default-layout": defaultlayout,
+        "no-layout": nolayout,
+        hello
+    },
+    setup() {
+        const route = useRoute();
+        let layout = computed(() => {
+            return (route.meta.layout || "default") + "-layout";
+        });
+        return { layout };
+    },
 };
 </script>
-
-<template>
-  <div id="app">
-    <HeaderBar />
-    <div class="section columns">
-      <NavBar />
-      <main class="column">
-        <router-view />
-      </main>
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-@import 'styles.scss';
-</style>
